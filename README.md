@@ -1,5 +1,5 @@
 # Jual Kurban Adaptable
-![Alt text](https://jualkurban.adaptable.app/main/ "Link Jual Kurban")
+![Link Jual Kurban](https://jualkurban.adaptable.app/main/ "Link Jual Kurban")
 
 ## Step by step
 ### Creating new Django project
