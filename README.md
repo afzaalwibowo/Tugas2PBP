@@ -1,4 +1,5 @@
 # Jual Kurban Adaptable
+![Alt text](https://jualkurban.adaptable.app/main/ "Link Jual Kurban")
 
 ## Step by step
 ### Creating new Django project
@@ -84,7 +85,7 @@ urlpatterns = [
 bila sudah seharusnya halaman main sudah bisa dilihat pada local server dengan perintah `python manage.py runserver`. Dan terakhir kita tinggal mengupload ke adaptable dengan format `Python App Template` dan database type `PostgreSQL`
 
 ## bagan
-<img src='/asset/Bagan.png'>
+<img src='/asset/Bagan.jpg'>
 
 ### Jelaskan mengapa kita menggunakan virtual environment? Apakah kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan virtual environment?
 
