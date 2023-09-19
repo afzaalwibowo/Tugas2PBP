@@ -42,20 +42,20 @@
 
 ### 📝 **Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).**
 
-1. **Inisiasi Formulir Untuk Menambahkan Entitas ke Model**:
-    - Di direktori "main", buatlah sebuah `forms.py` untuk membangun kelas `ItemForm` yang bertindak sebagai `ModelForm` dari model `Item` Ini menentukan komponen mana yang akan muncul dalam formulir
-    - Di `views.py`, inisialisasi metode `add_item` yang akan mengelola data dari formulir Disini, `ItemForm` diisi dengan data dari `request.POST`, di validasi, dan jika benar, disimpan Setelah itu, pengguna akan dialihkan ke halaman awal
-    - Render templat `add_to_list.html`
-    - Pada fungsi `display_main` di `views.py`, tambahkan `items = Item.objects.all()` untuk mengambil semua entitas `Item` dari basis data dan masukkan ke dalam konteks
-    - Tautkan URL yang diperlukan di `urls.py` pada "main" dengan metode yang baru dibuat
-    - Dalam direktori "templates" di "main", rancang `add_to_list.html` agar menampilkan antarmuka formulir dan tabel
-    - Integrasikan kode ke `main.html` untuk menampilkan entitas dalam tabel dan tambahkan tombol "Tambah Produk Baru" yang mengarah ke halaman formulir
-
-2. **Tampilan untuk Menampilkan Data dalam Beberapa Format**:
-    - Di `views.py`, definisikan metode `view_xml` dan tambahkan URL yang sesuai Metode ini mengubah data `Item` menjadi tampilan format XML
-    - Bentuk metode `view_json` di `views.py` dan sisipkan URL yang sesuai Metode ini mengubah data `Item` menjadi tampilan format JSON
-    - Buat metode `view_xml_by_id` di `views.py` dan tambahkan URL terkait Metode ini mengambil data dari `Item` berdasarkan ID yang diberikan dan menampilkan dalam format XML
-    - Di `views.py`, definisikan metode `view_json_by_id` dan tambahkan URL yang sesuai Metode ini mengubah data `Item` berdasarkan ID yang diberikan menjadi format JSON
+1. Mengembangkan form input untuk menambahkan objek model pada aplikasi yang telah ada:
+    - Dalam folder "main", buat sebuah file dengan nama `forms.py`. Di dalam file ini, definisikan sebuah class bernama `ItemForm` yang berfungsi sebagai `ModelForm` dari model `Item`. Class ini akan menentukan atribut mana saja yang akan ditampilkan pada form.
+    - Pada `views.py`, definisikan fungsi dengan nama `create_item`. Fungsi ini akan bertanggung jawab atas proses pengisian form `ItemForm` dengan data dari `request.POST` serta memvalidasinya. Apabila data yang diinput valid, maka akan disimpan dan selanjutnya pengguna akan diarahkan kembali ke halaman awal.
+    - Sisipkan fungsi untuk menampilkan `create_item.html`.
+    - Di dalam fungsi `show_main` yang berada di `views.py`, tambahkan kode `items = Item.objects.all()`. Fungsi ini akan mengambil semua objek `Item` yang tersimpan di database dan menyertakannya dalam konteks.
+    - Di dalam `urls.py` yang berada di folder "main", tambahkan path URL yang diperlukan untuk mengakses semua fungsi yang telah dibuat sebelumnya.
+    - Di folder "templates" dalam "main", buat file dengan nama `create_item.html`. Isikan file tersebut dengan kode yang relevan untuk membuat tampilan tabel dan form.
+    - Pada `main.html`, masukkan kode yang diperlukan untuk menampilkan data item dalam bentuk tabel. Tambahkan juga tombol "Add New Product" yang saat diklik akan mengarahkan pengguna ke halaman form input.
+    
+2. Menyediakan fungsi views untuk menampilkan data dengan berbagai format:
+    - Di dalam `views.py`, definisikan fungsi bernama `show_xml` dan tambahkan path URL untuk mengakses fungsi tersebut. Tugas dari fungsi ini adalah mengambil semua data `Item` dan menampilkannya dalam format XML.
+    - Definisikan fungsi lain dengan nama `show_json` di `views.py` serta sisipkan path URL untuk mengakses fungsi ini. Fungsi ini akan mengambil semua data `Item` dan menampilkannya dalam format JSON.
+    - Di `views.py`, tambahkan fungsi dengan nama `show_xml_by_id` serta path URL untuk mengakses fungsi tersebut. Fungsi ini bertugas mengambil data `Item` berdasarkan ID yang diberikan dan menampilkan data tersebut dalam format XML.
+    - Tambahkan fungsi `show_json_by_id` di `views.py` dan path URL untuk mengakses fungsi ini. Fungsi ini akan mengambil data `Item` berdasarkan ID yang disuplai dan menampilkan hasilnya dalam format JSON.
 
 ### 📸 **Mengakses kelima URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman, dan menambahkannya ke dalam `README.md`.**
 <img src='/asset/html.png'>
