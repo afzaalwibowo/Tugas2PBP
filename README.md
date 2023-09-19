@@ -58,11 +58,11 @@
     - Di `views.py`, definisikan metode `view_json_by_id` dan tambahkan URL yang sesuai Metode ini mengubah data `Item` berdasarkan ID yang diberikan menjadi format JSON
 
 ### 📸 **Mengakses kelima URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman, dan menambahkannya ke dalam `README.md`.**
-<img src='/aset/html.jpg'>
-<img src='/aset/xml.jpg'>
-<img src='/aset/json.jpg'>
-<img src='/aset/xml id.jpg'>
-<img src='/aset/json id.jpg'>
+<img src='/asset/html.jpg'>
+<img src='/asset/xml.jpg'>
+<img src='/asset/json.jpg'>
+<img src='/asset/xml id.jpg'>
+<img src='/asset/json id.jpg'>
 
 
 # **Jawaban Tugas 2**
