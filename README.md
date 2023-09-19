@@ -1,6 +1,71 @@
 # Jual Kurban Adaptable
 ![Alt text](https://jualkurban.adaptable.app/main/ "Link Jual Kurban")
 
+# **Jawaban Tugas 3**
+
+### 📘 **Perbedaan Antara Metode `POST` dan `GET` dalam Django:**
+- **📮 POST**:
+    - Mengirim informasi ke tujuan tanpa menampilkannya pada URL
+    - Variabel `$_POST` menampung informasi yang dikirim
+    - Memungkinkan pengiriman informasi dalam jumlah besar tanpa batasan khusus
+
+- **🔍 GET**:
+    - Mengirim informasi dengan menampilkan data di URL
+    - Variabel `$_GET` menampung informasi dari URL
+    - Keterbatasan panjang URL: hingga 2047 karakter
+
+---
+
+### 🌐 **Apa perbedaan utama antara XML, JSON, dan HTML dalam konteks pengiriman data?**
+- **🔖 XML**:
+    - Fasilitasi pertukaran data dengan format yang kuat melalui tag-tag khusus
+    - Berguna untuk konfigurasi aplikasi dan integrasi lintas platform
+
+- **📄 JSON**:
+    - Menyajikan data dengan format intuitif, menyerupai notasi objek
+    - Ideal untuk komunikasi web dan API
+
+- **🌍 HTML**:
+    - Fokus pada tampilan konten di browser
+    - Mengatur tampilan dan interaksi konten
+
+---
+
+### 🚀 **Mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern?**
+- **🔍 Bacaan Intuitif**: Mudah dibaca dan dipahami
+- **⚡ Penggunaan Efisien**: Struktur ringkas untuk penggunaan data optimal
+- **🌍 Dukungan Luas**: Kompatibel dengan hampir semua bahasa pemrograman
+- **💡 Keterkaitan dengan JavaScript**: Integrasi sempurna dengan web
+- **🔗 Popularitas di API**: Format pilihan untuk banyak API web
+- **🔗 Orientasi Objek**: Representasi objektif yang jelas
+- **🛡 Aspek Keamanan**: Risiko keamanan lebih rendah
+
+### 📝 **Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).**
+
+1. **Inisiasi Formulir Untuk Menambahkan Entitas ke Model**:
+    - Di direktori "main", buatlah sebuah `forms.py` untuk membangun kelas `ItemForm` yang bertindak sebagai `ModelForm` dari model `Item` Ini menentukan komponen mana yang akan muncul dalam formulir
+    - Di `views.py`, inisialisasi metode `add_item` yang akan mengelola data dari formulir Disini, `ItemForm` diisi dengan data dari `request.POST`, di validasi, dan jika benar, disimpan Setelah itu, pengguna akan dialihkan ke halaman awal
+    - Render templat `add_to_list.html`
+    - Pada fungsi `display_main` di `views.py`, tambahkan `items = Item.objects.all()` untuk mengambil semua entitas `Item` dari basis data dan masukkan ke dalam konteks
+    - Tautkan URL yang diperlukan di `urls.py` pada "main" dengan metode yang baru dibuat
+    - Dalam direktori "templates" di "main", rancang `add_to_list.html` agar menampilkan antarmuka formulir dan tabel
+    - Integrasikan kode ke `main.html` untuk menampilkan entitas dalam tabel dan tambahkan tombol "Tambah Produk Baru" yang mengarah ke halaman formulir
+
+2. **Tampilan untuk Menampilkan Data dalam Beberapa Format**:
+    - Di `views.py`, definisikan metode `view_xml` dan tambahkan URL yang sesuai Metode ini mengubah data `Item` menjadi tampilan format XML
+    - Bentuk metode `view_json` di `views.py` dan sisipkan URL yang sesuai Metode ini mengubah data `Item` menjadi tampilan format JSON
+    - Buat metode `view_xml_by_id` di `views.py` dan tambahkan URL terkait Metode ini mengambil data dari `Item` berdasarkan ID yang diberikan dan menampilkan dalam format XML
+    - Di `views.py`, definisikan metode `view_json_by_id` dan tambahkan URL yang sesuai Metode ini mengubah data `Item` berdasarkan ID yang diberikan menjadi format JSON
+
+### 📸 **Mengakses kelima URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman, dan menambahkannya ke dalam `README.md`.**
+<img src='/aset/html.png'>
+<img src='/aset/xml.png'>
+<img src='/aset/json.png'>
+<img src='/aset/xml id.png'>
+<img src='/aset/json id.png'>
+
+
+# **Jawaban Tugas 2**
 ## Step by step
 ### Creating new Django project
 1. membuat file 'requirements.txt' serta menambahkan dependancies yang diperlukan. Pada kasus ini saya menambahkan
