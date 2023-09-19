@@ -1,5 +1,5 @@
 # Jual Kurban Adaptable
-![Alt text](https://jualkurban.adaptable.app/main/ "Link Jual Kurban")
+### https://jualkurban.adaptable.app/main/ 
 
 # **Jawaban Tugas 3**
 
