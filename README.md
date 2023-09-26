@@ -1,6 +1,98 @@
 # Jual Kurban Adaptable
 ### https://jualkurban.adaptable.app/main/ 
 
+---
+
+## 📘 **Jawaban Tugas 4**
+
+### 🚀 Bagaimana langkah-langkah yang kamu lakukan untuk menerapkan *checklist* di atas (tanpa hanya mengikuti tutorial)?
+
+1. 📌 **Melaksanakan fungsi pendaftaran, masuk, dan keluar** agar pengguna dapat mengakses aplikasi sebelumnya dengan mudah.
+    - 📝 **PENDAFTARAN**
+        - Di `views.py`, tambahkan `redirect`, `UserCreationForm`, dan `messages`
+        - Buat fungsi `register` yang menghasilkan formulir pendaftaran otomatis dan membuat akun pengguna saat data dikirim dari formulir
+        - Buat file HTML baru bernama `register.html` di folder `main/template` untuk mendesain templat pendaftaran
+        - Tambahkan fungsi `register` ke `urls.py`
+        - Sisipkan jalur URL ke `urlpatterns`
+    - 📝 **MASUK**
+        - Di `views.py`, tambahkan fungsi `authenticate` dan `login`
+        - Buat fungsi `login` untuk mengotentikasi pengguna yang ingin masuk
+        - Buat file HTML baru bernama `login.html` di folder `main/template` untuk mendesain templat masuk
+        - Tambahkan `login_user` ke `urls.py`
+        - Sisipkan jalur URL ke `urlpatterns`
+    - 📝 **KELUAR**
+        - Di `views.py`, tambahkan fungsi `logout`
+        - Buat fungsi `logout` untuk mengatur mekanisme keluar
+        - Buka file `main.html` dan tambahkan kode untuk Add New Product
+        - Tambahkan `logout_user` ke `urls.py`
+        - Sisipkan jalur URL ke `urlpatterns`
+
+2. 📸 Membuat **dua** akun pengguna dengan masing-masing **tiga** data contoh menggunakan model yang sudah ada pada aplikasi sebelumnya untuk setiap akun **secara lokal**
+   - afzaal - apjalwib
+   - apjal - afzaalwib
+
+3. 🔗 **Mengkaitkan model `Item` dengan `User`**.
+    - Tambahkan `user` di `models.py`
+    - Pada model `Item` yang sudah ada, sisipkan `ForeignKey` untuk mengkaitkan satu produk dengan satu pengguna melalui hubungan, di mana satu produk pasti terkait dengan satu pengguna
+        - Di `views.py` modifikasi fungsi `create_item`
+        - Sisipkan parameter `commit=False` untuk mencegah Django menyimpan objek ke basis data secara langsung
+        - Isi bidang `user` dengan objek `User` dari nilai balik `request.user` untuk menandakan bahwa objek tersebut dimiliki oleh pengguna yang sedang masuk
+
+4. 🖼️ **Menunjukkan informasi detail pengguna yang sedang masuk** seperti nama pengguna dan menerapkan `cookies` seperti `last login` di halaman utama aplikasi
+    - Modifikasi fungsi `show_main`
+        - Tampilkan objek `Item` yang terkait dengan pengguna yang sedang masuk dengan `items = Item.objects.filter(user=request.user)`
+        - Sisipkan kode `request.user.username`
+    - Di `views.py`, tambahkan `HttpResponseRedirect`, `reverse`, dan `datetime`
+    - Pada fungsi `login_user`, tambahkan fungsi `last_login` untuk melihat kapan terakhir pengguna masuk. Modifikasi **blok** `if user is not None` dengan menambahkan kode:
+        - `login(request, user)`
+        - `response = HttpResponseRedirect(reverse("main:show_main"))`
+        - `response.set_cookie('last_login', str(datetime.datetime.now()))`
+        - `return response`
+    - Pada fungsi `show_main`, tambahkan `'last_login': request.COOKIES['last_login']` ke dalam variabel `context`
+    - Modifikasi fungsi `logout_user` dengan menambahkan kode:
+        - `response = HttpResponseRedirect(reverse('main:login'))`
+        - `response.delete_cookie('last_login')`
+        - `return response`
+    - Pada file `main.html`, tambahkan kode `<h5>Sesi terakhir masuk: {{ last_login }}</h5>`
+
+### 📚 Apa itu Django `UserCreationForm` dan apa keunggulan serta kelemahannya?
+
+- 🌟 **Keunggulan**
+    - **Cepat dan Praktis:** UserCreationForm memungkinkan pembuat untuk dengan cepat membuat formulir pendaftaran tanpa menulis kode dari awal
+    - **Terintegrasi dengan Django:** UserCreationForm terintegrasi dengan fitur otentikasi Django, termasuk penggunaan kata sandi yang dienkripsi dan proses validasi
+    - **Keamanan Terintegrasi:** UserCreationForm sudah memiliki mekanisme keamanan untuk mencegah serangan seperti SQL injection dan cross-site scripting (XSS)
+- 🚫 **Kelemahan**
+    - **Terbatas pada Fungsi Dasar:** UserCreationForm hanya dirancang untuk pendaftaran dasar, sehingga memerlukan modifikasi jika diperlukan atribut tambahan
+    - **Tidak Lengkap:** Hanya mencakup dasar seperti nama pengguna dan kata sandi, jadi fitur tambahan seperti verifikasi email atau konfirmasi kata sandi harus ditambahkan secara manual
+    - **Bergantung pada Django:** Harus menggunakan Django sebagai kerangka kerja jika ingin menggunakan UserCreationForm
+
+### 🛡️ Apa bedanya autentikasi dan otorisasi dalam konteks Django dan mengapa keduanya penting?
+
+**Autentikasi** dalam konteks Django adalah proses memverifikasi identitas pengguna yang mencoba masuk. Biasanya melibatkan proses masuk dengan kombinasi nama pengguna dan kata sandi.
+
+**Otorisasi** menentukan apa yang boleh dilakukan pengguna setelah mereka terotentikasi. Ini mengatur akses ke halaman atau sumber daya tertentu.
+
+Keduanya penting karena autentikasi memastikan identitas pengguna, sementara otorisasi mengontrol akses mereka. Ini penting untuk menjaga keamanan data dan sumber daya di aplikasi web.
+
+### 🍪 Apa itu *cookies* dalam konteks aplikasi web dan bagaimana Django memanfaatkan *cookies* untuk mengelola data sesi pengguna?
+
+*Cookies* dalam aplikasi web adalah data kecil yang disimpan di perangkat pengguna. Fungsinya adalah untuk menyimpan informasi seperti ID ses
+
+i atau preferensi yang dapat diakses oleh server web saat pengguna berinteraksi dengan situs.
+
+Django memanfaatkan *cookies* untuk mengelola data sesi pengguna dengan cara:
+- **Membuat Sesi:** Menghasilkan sesi pengguna dan ID sesi unik saat pertama kali masuk
+- **Menyimpan Data Sesi:** Menyimpan informasi sesi dalam cookies dan mengenkripsinya jika diperlukan
+- **Mengakses Data Sesi:** Membaca cookies pengguna saat permintaan berikutnya
+- **Memperbarui Data Sesi:** Memperbolehkan pembuat untuk memperbarui data sesi pengguna
+- **Mengakhiri Sesi:** Menghapus data sesi saat pengguna keluar atau sesi berakhir
+
+### 🚫 Apakah penggunaan *cookies* secara default aman dalam pengembangan web atau ada potensi risiko yang perlu diwaspadai?
+
+Meskipun dengan implementasi yang tepat dan penggunaan di lingkungan yang aman, penggunaan *cookies* biasanya aman, namun ada risiko seperti pelanggaran privasi, pencurian cookie, dan kerentanan terhadap serangan. Penting bagi pembuat untuk memvalidasi data, menggunakan HTTPS, dan melindungi aplikasi dari ancaman serangan untuk menjaga keamanan data pengguna dan privasi.
+
+---
+
 # **Jawaban Tugas 3**
 
 ### 📘 **Perbedaan Antara Metode `POST` dan `GET` dalam Django:**
