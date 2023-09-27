@@ -46,19 +46,19 @@ Meskipun dengan implementasi yang tepat dan penggunaan di lingkungan yang aman, 
 ### 🚀 Bagaimana langkah-langkah yang kamu lakukan untuk menerapkan *checklist* di atas (tanpa hanya mengikuti tutorial)?
 
 1. 📌 **Melaksanakan fungsi pendaftaran, masuk, dan keluar** agar pengguna dapat mengakses aplikasi sebelumnya dengan mudah.
-    - 📝 **PENDAFTARAN**
+    - 📝 **REGISTER**
         - Di `views.py`, tambahkan `redirect`, `UserCreationForm`, dan `messages`
         - Buat fungsi `register` yang menghasilkan formulir pendaftaran otomatis dan membuat akun pengguna saat data dikirim dari formulir
         - Buat file HTML baru bernama `register.html` di folder `main/template` untuk mendesain templat pendaftaran
         - Tambahkan fungsi `register` ke `urls.py`
         - Sisipkan jalur URL ke `urlpatterns`
-    - 📝 **MASUK**
+    - 📝 **LOGIN**
         - Di `views.py`, tambahkan fungsi `authenticate` dan `login`
         - Buat fungsi `login` untuk mengotentikasi pengguna yang ingin masuk
         - Buat file HTML baru bernama `login.html` di folder `main/template` untuk mendesain templat masuk
         - Tambahkan `login_user` ke `urls.py`
         - Sisipkan jalur URL ke `urlpatterns`
-    - 📝 **KELUAR**
+    - 📝 **LOGOUT**
         - Di `views.py`, tambahkan fungsi `logout`
         - Buat fungsi `logout` untuk mengatur mekanisme keluar
         - Buka file `main.html` dan tambahkan kode untuk Add New Product
