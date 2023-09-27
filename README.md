@@ -5,6 +5,44 @@
 
 ## 📘 **Jawaban Tugas 4**
 
+2. 📸 Membuat **dua** akun pengguna dengan masing-masing **tiga** data contoh menggunakan model yang sudah ada pada aplikasi sebelumnya untuk setiap akun **secara lokal**
+   - afzaal - apjalwib
+   - apjal - afzaalwib
+
+### 📚 Apa itu Django `UserCreationForm` dan apa keunggulan serta kelemahannya?
+
+- 🌟 **Keunggulan**
+    - **Cepat dan Praktis:** UserCreationForm memungkinkan pembuat untuk dengan cepat membuat formulir pendaftaran tanpa menulis kode dari awal
+    - **Terintegrasi dengan Django:** UserCreationForm terintegrasi dengan fitur otentikasi Django, termasuk penggunaan kata sandi yang dienkripsi dan proses validasi
+    - **Keamanan Terintegrasi:** UserCreationForm sudah memiliki mekanisme keamanan untuk mencegah serangan seperti SQL injection dan cross-site scripting (XSS)
+- 🚫 **Kelemahan**
+    - **Terbatas pada Fungsi Dasar:** UserCreationForm hanya dirancang untuk pendaftaran dasar, sehingga memerlukan modifikasi jika diperlukan atribut tambahan
+    - **Tidak Lengkap:** Hanya mencakup dasar seperti nama pengguna dan kata sandi, jadi fitur tambahan seperti verifikasi email atau konfirmasi kata sandi harus ditambahkan secara manual
+    - **Bergantung pada Django:** Harus menggunakan Django sebagai kerangka kerja jika ingin menggunakan UserCreationForm
+
+### 🛡️ Apa bedanya autentikasi dan otorisasi dalam konteks Django dan mengapa keduanya penting?
+
+**Autentikasi** dalam konteks Django adalah proses memverifikasi identitas pengguna yang mencoba masuk. Biasanya melibatkan proses masuk dengan kombinasi nama pengguna dan kata sandi.
+
+**Otorisasi** menentukan apa yang boleh dilakukan pengguna setelah mereka terotentikasi. Ini mengatur akses ke halaman atau sumber daya tertentu.
+
+Keduanya penting karena autentikasi memastikan identitas pengguna, sementara otorisasi mengontrol akses mereka. Ini penting untuk menjaga keamanan data dan sumber daya di aplikasi web.
+
+### 🍪 Apa itu *cookies* dalam konteks aplikasi web dan bagaimana Django memanfaatkan *cookies* untuk mengelola data sesi pengguna?
+
+*Cookies* dalam aplikasi web adalah data kecil yang disimpan di perangkat pengguna. Fungsinya adalah untuk menyimpan informasi seperti ID sesi atau preferensi yang dapat diakses oleh server web saat pengguna berinteraksi dengan situs.
+
+Django memanfaatkan *cookies* untuk mengelola data sesi pengguna dengan cara:
+- **Membuat Sesi:** Menghasilkan sesi pengguna dan ID sesi unik saat pertama kali masuk
+- **Menyimpan Data Sesi:** Menyimpan informasi sesi dalam cookies dan mengenkripsinya jika diperlukan
+- **Mengakses Data Sesi:** Membaca cookies pengguna saat permintaan berikutnya
+- **Memperbarui Data Sesi:** Memperbolehkan pembuat untuk memperbarui data sesi pengguna
+- **Mengakhiri Sesi:** Menghapus data sesi saat pengguna keluar atau sesi berakhir
+
+### 🚫 Apakah penggunaan *cookies* secara default aman dalam pengembangan web atau ada potensi risiko yang perlu diwaspadai?
+
+Meskipun dengan implementasi yang tepat dan penggunaan di lingkungan yang aman, penggunaan *cookies* biasanya aman, namun ada risiko seperti pelanggaran privasi, pencurian cookie, dan kerentanan terhadap serangan. Penting bagi pembuat untuk memvalidasi data, menggunakan HTTPS, dan melindungi aplikasi dari ancaman serangan untuk menjaga keamanan data pengguna dan privasi.
+
 ### 🚀 Bagaimana langkah-langkah yang kamu lakukan untuk menerapkan *checklist* di atas (tanpa hanya mengikuti tutorial)?
 
 1. 📌 **Melaksanakan fungsi pendaftaran, masuk, dan keluar** agar pengguna dapat mengakses aplikasi sebelumnya dengan mudah.
@@ -27,9 +65,6 @@
         - Tambahkan `logout_user` ke `urls.py`
         - Sisipkan jalur URL ke `urlpatterns`
 
-2. 📸 Membuat **dua** akun pengguna dengan masing-masing **tiga** data contoh menggunakan model yang sudah ada pada aplikasi sebelumnya untuk setiap akun **secara lokal**
-   - afzaal - apjalwib
-   - apjal - afzaalwib
 
 3. 🔗 **Mengkaitkan model `Item` dengan `User`**.
     - Tambahkan `user` di `models.py`
@@ -54,43 +89,6 @@
         - `response.delete_cookie('last_login')`
         - `return response`
     - Pada file `main.html`, tambahkan kode `<h5>Sesi terakhir masuk: {{ last_login }}</h5>`
-
-### 📚 Apa itu Django `UserCreationForm` dan apa keunggulan serta kelemahannya?
-
-- 🌟 **Keunggulan**
-    - **Cepat dan Praktis:** UserCreationForm memungkinkan pembuat untuk dengan cepat membuat formulir pendaftaran tanpa menulis kode dari awal
-    - **Terintegrasi dengan Django:** UserCreationForm terintegrasi dengan fitur otentikasi Django, termasuk penggunaan kata sandi yang dienkripsi dan proses validasi
-    - **Keamanan Terintegrasi:** UserCreationForm sudah memiliki mekanisme keamanan untuk mencegah serangan seperti SQL injection dan cross-site scripting (XSS)
-- 🚫 **Kelemahan**
-    - **Terbatas pada Fungsi Dasar:** UserCreationForm hanya dirancang untuk pendaftaran dasar, sehingga memerlukan modifikasi jika diperlukan atribut tambahan
-    - **Tidak Lengkap:** Hanya mencakup dasar seperti nama pengguna dan kata sandi, jadi fitur tambahan seperti verifikasi email atau konfirmasi kata sandi harus ditambahkan secara manual
-    - **Bergantung pada Django:** Harus menggunakan Django sebagai kerangka kerja jika ingin menggunakan UserCreationForm
-
-### 🛡️ Apa bedanya autentikasi dan otorisasi dalam konteks Django dan mengapa keduanya penting?
-
-**Autentikasi** dalam konteks Django adalah proses memverifikasi identitas pengguna yang mencoba masuk. Biasanya melibatkan proses masuk dengan kombinasi nama pengguna dan kata sandi.
-
-**Otorisasi** menentukan apa yang boleh dilakukan pengguna setelah mereka terotentikasi. Ini mengatur akses ke halaman atau sumber daya tertentu.
-
-Keduanya penting karena autentikasi memastikan identitas pengguna, sementara otorisasi mengontrol akses mereka. Ini penting untuk menjaga keamanan data dan sumber daya di aplikasi web.
-
-### 🍪 Apa itu *cookies* dalam konteks aplikasi web dan bagaimana Django memanfaatkan *cookies* untuk mengelola data sesi pengguna?
-
-*Cookies* dalam aplikasi web adalah data kecil yang disimpan di perangkat pengguna. Fungsinya adalah untuk menyimpan informasi seperti ID ses
-
-i atau preferensi yang dapat diakses oleh server web saat pengguna berinteraksi dengan situs.
-
-Django memanfaatkan *cookies* untuk mengelola data sesi pengguna dengan cara:
-- **Membuat Sesi:** Menghasilkan sesi pengguna dan ID sesi unik saat pertama kali masuk
-- **Menyimpan Data Sesi:** Menyimpan informasi sesi dalam cookies dan mengenkripsinya jika diperlukan
-- **Mengakses Data Sesi:** Membaca cookies pengguna saat permintaan berikutnya
-- **Memperbarui Data Sesi:** Memperbolehkan pembuat untuk memperbarui data sesi pengguna
-- **Mengakhiri Sesi:** Menghapus data sesi saat pengguna keluar atau sesi berakhir
-
-### 🚫 Apakah penggunaan *cookies* secara default aman dalam pengembangan web atau ada potensi risiko yang perlu diwaspadai?
-
-Meskipun dengan implementasi yang tepat dan penggunaan di lingkungan yang aman, penggunaan *cookies* biasanya aman, namun ada risiko seperti pelanggaran privasi, pencurian cookie, dan kerentanan terhadap serangan. Penting bagi pembuat untuk memvalidasi data, menggunakan HTTPS, dan melindungi aplikasi dari ancaman serangan untuk menjaga keamanan data pengguna dan privasi.
-
 ---
 
 # **Jawaban Tugas 3**
