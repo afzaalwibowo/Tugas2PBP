@@ -8,6 +8,7 @@ from main.views import register #sesuaikan dengan nama fungsi yang dibuat
 from main.views import login_user #sesuaikan dengan nama fungsi yang dibuat
 from main.views import logout_user
 from main.views import delete
+from main.views import edit_item
 
 app_name = 'main'
 
@@ -22,4 +23,5 @@ urlpatterns = [
     path('login/', login_user, name='login'), #sesuaikan dengan nama fungsi yang dibuat
     path('logout/', logout_user, name='logout'),
     path('delete/<int:id>/', delete, name='delete'),
+    path('edit-item/<int:id>', edit_item, name='edit_item'),
 ]

@@ -1,6 +1,105 @@
 # Jual Kurban Adaptable
 ### https://jualkurban.adaptable.app/main/ 
 
+## 📘 **Jawaban Tugas 5**
+
+---
+
+## Jelaskan manfaat dari setiap *element selector* dan kapan waktu yang tepat untuk menggunakannya.
+
+### 1. Universal Selector (*)
+- **🔍 Apa itu?** Selector yang memungkinkan kita untuk memilih semua elemen dalam dokumen HTML.
+- **🌟 Manfaat:** Dengan Universal Selector, kita dapat mengatur beberapa properti gaya dasar untuk seluruh elemen di halaman, seperti mengatur margin atau padding secara umum.
+- **⏰ Kapan digunakan:** Saat kita ingin memberikan gaya dasar yang seragam ke seluruh elemen di halaman.
+
+### 2. Type Selector (Tag Selector)
+- **🔍 Apa itu?** Selector yang digunakan untuk memilih semua elemen dengan jenis tag yang sama.
+- **🌟 Manfaat:** Dengan Type Selector, kita dapat menerapkan gaya umum pada semua elemen dengan jenis tag yang sama, memudahkan konsistensi gaya.
+- **⏰ Kapan digunakan:** Saat kita ingin memberikan gaya khusus pada elemen berdasarkan jenis tag-nya.
+
+### 3. Class Selector (.class)
+- **🔍 Apa itu?** Selector yang memungkinkan kita memilih elemen berdasarkan nilai atribut `class`.
+- **🌟 Manfaat:** Dengan Class Selector, kita dapat mengaplikasikan gaya pada sekelompok elemen yang memiliki karakteristik atau fungsi yang sama.
+- **⏰ Kapan digunakan:** Saat kita ingin memberikan gaya pada elemen dengan class tertentu, seperti tombol atau judul.
+
+### 4. ID Selector (#id)
+- **🔍 Apa itu?** Selector yang memungkinkan kita untuk memilih elemen berdasarkan nilai atribut `id` yang unik.
+- **🌟 Manfaat:** Dengan ID Selector, kita dapat mengendalikan elemen dengan ID unik dan memudahkan identifikasi elemen tertentu.
+- **⏰ Kapan digunakan:** Saat kita ingin memberikan gaya atau fungsi khusus pada elemen dengan ID tertentu.
+
+### 5. Descendant Selector (ancestor descendant)
+- **🔍 Apa itu?** Selector yang memungkinkan kita untuk memilih elemen turunan yang berada dalam elemen lain.
+- **🌟 Manfaat:** Dengan Descendant Selector, kita dapat menerapkan gaya pada elemen yang berada dalam struktur atau tata letak tertentu.
+- **⏰ Kapan digunakan:** Saat kita ingin memberikan gaya pada elemen yang berada dalam elemen lain.
+
+### 6. Child Selector (parent > child)
+- **🔍 Apa itu?** Selector yang memungkinkan kita untuk memilih elemen anak langsung dari elemen induk.
+- **🌟 Manfaat:** Dengan Child Selector, kita dapat menerapkan gaya hanya pada elemen anak langsung, memudahkan kontrol gaya.
+- **⏰ Kapan digunakan:** Saat kita ingin memberikan gaya khusus pada elemen anak langsung dalam hubungan parent-child.
+
+## Jelaskan HTML5 Tag yang kamu ketahui.
+
+- `<html>`: Dasar dari dokumen HTML.
+- `<head>`: Bagian yang menyediakan informasi tentang dokumen HTML.
+- `<title>`: Bagian yang menentukan judul untuk dokumen HTML.
+- `<body>`: Bagian utama dari isi dokumen HTML.
+- `<h1> - <h6>`: Tag untuk menandai judul dengan ukuran yang berbeda-beda.
+- `<p>`: Tag untuk menandai paragraf dalam dokumen HTML.
+- `<a>`: Tag untuk membuat hyperlink ke halaman lain atau alamat email.
+- `<img>`: Tag untuk menampilkan gambar dalam dokumen HTML.
+- `<button>`: Tag untuk menandai tombol yang dapat diklik.
+- `<div>`: Tag untuk menandai sebuah section atau bagian dalam halaman.
+- `<!DOCTYPE html>`: Deklarasi untuk mendefinisikan jenis dokumen HTML5 yang sedang digunakan.
+
+## Jelaskan perbedaan antara *margin* dan *padding*.
+
+- **Margin:** Area di sekeliling elemen HTML yang terletak di luar batas elemen tersebut. Margin tidak memiliki latar belakang atau warna, sehingga dapat dianggap sebagai zona yang transparan. Penggunaan margin adalah untuk mengendalikan jarak antara elemen dengan elemen-elemen lain yang berada di sekitarnya.
+  
+- **Padding:** Ruang yang berada dalam elemen HTML, terletak di antara batas elemen dan kontennya. Padding memiliki latar belakang dan warna yang identik dengan elemen itu sendiri. Fungsi padding adalah untuk mengontrol jarak antara batas elemen dan isi (konten) elemen tersebut.
+
+## Jelaskan perbedaan antara *framework* CSS Tailwind dan Bootstrap. Kapan sebaiknya kita menggunakan Bootstrap daripada Tailwind, dan sebaliknya?
+
+### Tailwind CSS
+- **🔍 Kelebihan:** Framework CSS yang sangat fleksibel dan berbasis utility. Dengan Tailwind, kita dapat membangun komponen dengan menggabungkan kelas-kelas yang tersedia. Ini memungkinkan kustomisasi yang sangat mendalam dengan mudah.
+- **❗ Kekurangan:** Menghasilkan kode HTML yang lebih besar karena memerlukan lebih banyak kelas dalam elemen HTML.
+- **⏰ Kapan digunakan:** Saat kita ingin memiliki kontrol yang sangat mendalam atas desain tampilan dan memerlukan fleksibilitas yang tinggi dalam mengatur tampilan elemen-elemen.
+
+### Bootstrap
+- **🔍 Kelebihan:** Framework yang lebih terstruktur dengan komponen-komponen yang sudah siap pakai dan gaya bawaan. Bootstrap memiliki desain yang lebih kaku dan terstruktur.
+- **❗ Kekurangan:** Mungkin memiliki ukuran file CSS yang lebih besar karena mengandung semua gaya komponen.
+- **⏰ Kapan digunakan:** Saat kita membutuhkan prototyping cepat, ingin memanfaatkan komponen yang sudah jadi, atau tidak memiliki banyak waktu untuk menyesuaikan desain tampilan secara mendalam.
+
+## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+
+#### base.html
+- **Penyesuaian Tema Warna**
+    - Menggunakan palet warna "earth tone" untuk memberikan nuansa yang hangat dan alami sesuai dengan toko kurban.
+    - Menambahkan gaya CSS inline untuk mengatur warna latar belakang, warna teks, dan warna tautan.
+    - Mengatur warna tombol dengan kombinasi warna yang sesuai dengan tema.
+    - Mengatur tampilan tabel dengan warna header yang kontras dan warna latar belakang baris terakhir yang berbeda.
+
+#### main.html
+- **Penataan Konten**
+    - Menggunakan container Bootstrap untuk mengatur konten secara rapi dan responsif.
+    - Mengelompokkan informasi dalam card Bootstrap dengan efek bayangan untuk menambahkan kedalaman.
+    - Mengatur tampilan tabel dengan kelas Bootstrap untuk estetika yang lebih baik dan menambahkan logika untuk menyoroti baris terakhir dengan warna yang berbeda.
+    - Menggunakan tombol Bootstrap untuk tindakan seperti "Tambah Item Baru" dan "Logout" dengan warna yang sesuai dengan tema.
+
+#### login.html & register.html
+- **Optimalisasi Tata Letak**
+    - Menggunakan container Bootstrap untuk mengatur elemen-elemen form ke tengah halaman.
+    - Mengelompokkan elemen-elemen form dalam card Bootstrap untuk tampilan yang lebih rapi.
+    - Menambahkan judul di dalam `card-header` untuk memberikan informasi kontekstual kepada pengguna.
+    - Menggunakan tombol Bootstrap untuk tindakan seperti "Login" dan "Register".
+    - Menampilkan pesan kesalahan dengan format yang jelas menggunakan `alert` dari Bootstrap jika terjadi kesalahan.
+
+#### create_item.html & edit_item.html
+- **Optimalisasi Form**
+    - Menggunakan container Bootstrap untuk mengatur elemen-elemen form.
+    - Mengelompokkan elemen-elemen form dalam card Bootstrap untuk tampilan yang lebih rapi.
+    - Menambahkan judul di dalam `card-header` untuk memberikan informasi kontekstual kepada pengguna.
+    - Menggunakan tombol Bootstrap untuk tindakan seperti "Tambah Item" dan "Edit Item".
+
 ---
 
 ## 📘 **Jawaban Tugas 4**
