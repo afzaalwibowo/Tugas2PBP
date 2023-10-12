@@ -9,8 +9,13 @@ from main.views import login_user #sesuaikan dengan nama fungsi yang dibuat
 from main.views import logout_user
 from main.views import delete
 from main.views import edit_item
+from main.views import get_item_json
+from main.views import add_item_ajax
+from main.views import EditItemAjaxView
+from . import views  # Make sure this import is present
 
 app_name = 'main'
+
 
 urlpatterns = [
     path('', show_main, name='show_main'),
@@ -24,4 +29,8 @@ urlpatterns = [
     path('logout/', logout_user, name='logout'),
     path('delete/<int:id>/', delete, name='delete'),
     path('edit-item/<int:id>', edit_item, name='edit_item'),
+    path('get-item/', get_item_json, name='get_item_json'),
+    path('create-item-ajax/', add_item_ajax, name='add_item_ajax'),
+    path('edit-item-ajax/', views.EditItemAjaxView.as_view(), name='edit_item_ajax'),
+    
 ]

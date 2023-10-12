@@ -14,6 +14,12 @@ from django.contrib.auth.decorators import login_required
 import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+from django.views import View
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.utils.decorators import method_decorator
+from django.http import HttpResponseNotFound
 # Create your views here.
 @login_required(login_url='/login')
 def show_main(request):
@@ -108,3 +114,34 @@ def edit_item(request, id):
 
     context = {'form': form}
     return render(request, "edit_item.html", context)
+
+def get_item_json(request):
+    item_item = Item.objects.all()
+    return HttpResponse(serializers.serialize('json', item_item))
+
+@csrf_exempt
+def add_item_ajax(request):
+    if request.method == 'POST':
+        name = request.POST.get("name")
+        amount = request.POST.get("amount")
+        description = request.POST.get("description")
+        user = request.user
+
+        new_item = Item(name=name, amount=amount, description=description, user=user)
+        new_item.save()
+
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()
+
+@method_decorator(csrf_exempt, name='dispatch')
+class EditItemAjaxView(View):
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body.decode('utf-8'))
+        item_id = data.get('item_id')
+        item = get_object_or_404(Item, pk=item_id)
+        item.name = data.get('name')
+        item.amount = data.get('price')
+        item.description = data.get('description')
+        item.save()
+        return JsonResponse({'status': 'success'})

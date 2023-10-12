@@ -9,7 +9,7 @@
 
         <h5>Class:</h5>
         <p>{{class}}</p>
-        <table class="table table-striped table-hover">
+        <!-- <table class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -31,9 +31,45 @@
                             <a href="{% url 'main:edit_item' item.pk %}" class="btn btn-warning btn-sm">Edit</a>
                         </td>
                     </tr>
-                {% endfor %}
+                    {% endfor %}
             </tbody>
-        </table>
+        </table> -->
+        <table id="item_table"></table>
+        <div id="item_cards" class="row row-cols-1 row-cols-md-3 g-4"></div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Item</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form" onsubmit="return false;">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="name" class="col-form-label">Name:</label>
+                                <input type="text" class="form-control" id="name" name="name"></input>
+                            </div>
+                            <div class="mb-3">
+                                <label for="amount" class="col-form-label">Amount:</label>
+                                <input type="number" class="form-control" id="amount" name="amount"></input>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="col-form-label">Description:</label>
+                                <textarea class="form-control" id="description" name="description"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Item</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="item_cards" class="row row-cols-1 row-cols-md-3 g-4"></div>
+        <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Item by AJAX</button>
+
         
         <div class="mt-4">
             <h5>Sesi terakhir login: {{ last_login }}</h5>
@@ -41,5 +77,123 @@
             <a href="{% url 'main:logout' %}" class="btn btn-secondary">Logout</a>
         </div>
     </div>
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit_form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <input type="hidden" id="edit_item_id" name="item_id">
+                        <div class="mb-3">
+                            <label for="edit_name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="edit_name" name="name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit_amount" class="col-form-label">Amount:</label>
+                            <input type="number" class="form-control" id="edit_amount" name="amount">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit_description" class="col-form-label">Description:</label>
+                            <textarea class="form-control" id="edit_description" name="description"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_edit" data-bs-dismiss="modal">Save changes</button>
+                </div>
+            </div>  
+        </div>
+    </div>   
 </div>
+
+<script>
+    async function getItems() {
+        return fetch("{% url 'main:get_item_json' %}")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            });
+    }
+
+    async function refreshItems() {
+        try {
+            document.getElementById("item_cards").innerHTML = "";  // Adjusted line
+            const items = await getItems();
+            let htmlString = '';
+            items.forEach((item) => {
+                htmlString += `
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">${item.fields.name}</h5>
+                            <p class="card-text">Amount: ${item.fields.amount}</p>
+                            <p class="card-text">Description: ${item.fields.description}</p>
+                            <p class="card-text">Date Added: ${item.fields.date_added}</p>
+                            <a href='delete/${item.pk}' class="btn btn-danger btn-sm">Delete</a>
+                            <a href='edit-item/${item.pk}' class="btn btn-warning btn-sm">Edit</a>
+                        </div>
+                    </div>
+                </div>`;
+            });
+
+            document.getElementById("item_cards").innerHTML = htmlString;  // Adjusted line
+        } catch (error) {
+            console.error('There has been a problem with your fetch operation:', error);
+        }
+    }
+
+    refreshItems()
+
+    function addItem() {
+        fetch("{% url 'main:add_item_ajax' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#form'))
+        }).then(refreshItems)
+
+        document.getElementById("form").reset()
+        return false
+    }
+
+    function openEditModal(item) {
+        document.getElementById('edit_item_id').value = item.pk;
+        document.getElementById('edit_name').value = item.fields.name;
+        document.getElementById('edit_amount').value = item.fields.amount;
+        document.getElementById('edit_description').value = item.fields.description;
+        var editModal = new bootstrap.Modal(document.getElementById('editModal'));
+        editModal.show();
+    }
+
+    function editItem() {
+        fetch("{% url 'main:edit_item_ajax' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#edit_form'))
+        }).then(refreshItems);
+
+        return false;
+    }
+
+    function deleteItem(itemId) {
+        fetch(`delete/${itemId}`, {
+            method: "POST",
+        }).then(refreshItems);
+    }
+
+
+    document.getElementById("button_add").onclick = addItem
+    document.getElementById("button_edit").onclick = editItem;
+
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        refreshItems();
+    });
+
+
+</script>
 {% endblock content %}

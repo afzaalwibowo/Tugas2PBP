@@ -7,3 +7,9 @@ class Item(models.Model):
     date_added = models.DateField(auto_now_add=True)
     amount = models.IntegerField()
     description = models.TextField()
+
+# class Employee(models.Model):
+#     name = models.CharField(max_length=255)
+#     age = models.IntegerField()
+#     hobi = models.TextField()
+#     date_added = models.DateField(auto_now_add=True)

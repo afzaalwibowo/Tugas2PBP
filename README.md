@@ -1,6 +1,184 @@
 # Jual Kurban Adaptable
 ### https://jualkurban.adaptable.app/main/ 
 
+## 📚 Jawaban Soal Tugas 6
+---
+
+### 🛠️ Berikan langkah-langkah implementasi checklist di atas secara berurutan (tanpa hanya mengikuti tutorial).
+
+#### 🔄 Mengubah tugas 5 yang telah dibuat sebelumnya menjadi menggunakan AJAX.
+1. **AJAX GET**
+    1. Modifikasi kode data item berbentuk *cards* untuk mendukung AJAX GET.
+        - Hapus kode *table* yang ada sebelumnya
+        - Tambahkan kode berikut pada `main.html`
+            ```
+            <div id="item_cards" class="row row-cols-1 row-cols-md-3 g-4"></div>
+            ```
+        - Tambahkan kode untuk mengatur card pada refreshItems
+            ```
+            async function refreshItems() {
+                try {
+                    document.getElementById("item_cards").innerHTML = "";  // Adjusted line
+                    const items = await getItems();
+                    let htmlString = '';
+                    items.forEach((item) => {
+                        htmlString += `
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">${item.fields.name}</h5>
+                                    <p class="card-text">Amount: ${item.fields.amount}</p>
+                                    <p class="card-text">Description: ${item.fields.description}</p>
+                                    <p class="card-text">Date Added: ${item.fields.date_added}</p>
+                                    <a href='delete/${item.pk}' class="btn btn-danger btn-sm">Delete</a>
+                                    <a href='edit-item/${item.pk}' class="btn btn-warning btn-sm">Edit</a>
+                                </div>
+                            </div>
+                        </div>`;
+                    });
+
+                    document.getElementById("item_cards").innerHTML = htmlString;  // Adjusted line
+                } catch (error) {
+                    console.error('There has been a problem with your fetch operation:', error);
+                }
+            }
+
+            refreshItems()
+             ```
+    2. Lakukan pengambilan task menggunakan AJAX GET.
+        - Buat fungsi `get_item_json` pada `views.py` untuk Mengembalikan Data JSON
+        - Menambahkan `<script>` pada `main.html`
+            ```
+            async function getItems() {
+                return fetch("{% url 'main:get_item_json' %}")
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok ' + response.statusText);
+                        }
+                        return response.json();
+                    });
+            }
+            ```
+
+2. **AJAX POST**
+    1. Buatlah sebuah tombol yang membuka sebuah modal dengan form untuk menambahkan item.
+        - Menambagkan kode dibawah pada `main.html`
+            ```
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Item</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="form" onsubmit="return false;">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="name" class="col-form-label">Name:</label>
+                                    <input type="text" class="form-control" id="name" name="name"></input>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="amount" class="col-form-label">Amount:</label>
+                                    <input type="number" class="form-control" id="amount" name="amount"></input>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description" class="col-form-label">Description:</label>
+                                    <textarea class="form-control" id="description" name="description"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Item</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            ```
+        - Membuat button untuk menambahkan item
+            ```
+            <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Item by AJAX</button>
+
+            ```
+    2. Buatlah fungsi view baru untuk menambahkan item baru ke dalam basis data.
+        - Membuat Fungsi `add_item_ajax` pada `views.py`
+            ```
+           @csrf_exempt
+            def add_item_ajax(request):
+                if request.method == 'POST':
+                    name = request.POST.get("name")
+                    amount = request.POST.get("amount")
+                    description = request.POST.get("description")
+                    user = request.user
+
+                    new_item = Item(name=name, amount=amount, description=description, user=user)
+                    new_item.save()
+
+                    return HttpResponse(b"CREATED", status=201)
+
+                return HttpResponseNotFound()
+            ```
+    3. Buatlah path `/create-ajax/` yang mengarah ke fungsi *view* yang baru kamu buat.
+        - Menambahkan Routing Untuk Fungsi `add_item_ajax` pada `urls.py`
+        - Menambahkan Routing Untuk Fungsi `get_item_json` pada `urls.py`
+    4. Hubungkan form yang telah kamu buat di dalam modal kamu ke *path* `/create-ajax/`.
+        - Tambahkan fungsi `addItem` pada `<script>` di `main.html`
+            ```
+            function addItem() {
+                fetch("{% url 'main:add_item_ajax' %}", {
+                    method: "POST",
+                    body: new FormData(document.querySelector('#form'))
+                }).then(refreshItems)
+
+                document.getElementById("form").reset()
+                return false
+            }
+            ```
+    5. Lakukan *refresh* pada halaman utama secara asinkronus untuk menampilkan daftar item terbaru tanpa *reload* halaman utama secara keseluruhan.
+
+
+3. **🔄 Melakukan perintah collectstatic.**
+    - Menambahkan kode dibawah pada `settings.py`
+       
+
+        ```
+        STATIC_URL = 'static/'
+
+        STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+        ```
+    - Menjalankan `python manage.py collectstatic` pada cmd
+
+### 🔄 Bagaimanakah perbedaan antara asynchronous programming dan synchronous programming?
+1. **Asynchronous Programming:**
+    - Operasi dilakukan secara independen tanpa perlu menunggu operasi lain selesai.
+    - Respon lebih cepat karena tidak ada penundaan yang signifikan antara operasi.
+    - Menggunakan callback atau await/async untuk mengatur operasi asinkron.
+    - Sangat sesuai untuk operasi terkait jaringan, I/O intensif, dan aplikasi yang perlu tanggap terhadap input.
+2. **Synchronous Programming:**
+    - Operasi dilakukan secara berurutan, satu demi satu.
+    - Respon lebih lambat karena operasi harus menunggu operasi sebelumnya untuk selesai.
+    - Tidak membutuhkan setup khusus seperti callback.
+    - Sangat sesuai untuk tugas-tugas yang sederhana dan cepat, serta operasi yang tidak membutuhkan waktu tunggu.
+
+### 🔄 Bagaimana paradigma event-driven programming diaplikasikan dalam JavaScript dan AJAX, dan berikan satu contoh penerapannya dalam tugas ini.
+Paradigma pemrograman berbasis event dalam JavaScript dan AJAX mengubah aplikasi web menjadi responsif dan interaktif dengan berfokus pada penggunaan event sebagai pemicu eksekusi kode, berbeda dengan pendekatan prosedural. Dalam tugas ini, paradigma ini diwujudkan melalui tombol yang memicu fungsi `addItem()` dan `deleteItem()` saat tombol "Add Item" atau "Delete" ditekan.
+
+### 🔄 Bagaimana penerapan asynchronous programming dalam AJAX?
+Pemrograman asinkron dalam AJAX memungkinkan operasi seperti pengambilan data dari server untuk dilakukan tanpa menginterupsi eksekusi kode utama, menjaga aplikasi web tetap responsif dan efisien. Hal ini dicapai dengan menggunakan fungsi callback, promise, atau async/await untuk menangani respons dari server.
+
+### 🔄 Bandingkan penggunaan Fetch API dan library jQuery dalam penerapan AJAX pada PBP kali ini. Manakah yang menurut kamu lebih baik?
+1. **Fetch API:**
+    - Lebih ringan dan sederhana, merupakan bagian dari JavaScript modern, memungkinkan pengiriman permintaan HTTP secara asinkron dengan efisien.
+    - Menggunakan Promise untuk menangani respons, lebih mudah dimengerti.
+2. **jQuery:**
+    - Library JavaScript yang lebih besar dengan banyak fitur, termasuk kemampuan untuk mengirim permintaan HTTP secara asinkron.
+    - Meski lebih berat, jQuery memiliki dukungan lebih luas untuk browser lama.
+
+Menurut saya, Fetch API adalah opsi yang lebih baik karena lebih mudah digunakan dan memiliki performa yang lebih baik dan responsif dibandingkan dengan jQuery yang lebih berat.
+
+---
+
 ## 📘 **Jawaban Tugas 5**
 
 ---
@@ -18,7 +196,7 @@
 - **⏰ Kapan digunakan:** Saat kita ingin memberikan gaya khusus pada elemen berdasarkan jenis tag-nya.
 
 ### 3. Class Selector (.class)
-- **🔍 Apa itu?** Selector yang memungkinkan kita memilih elemen berdasarkan nilai atribut `class`.
+- **🔍 Apa itu?** Selector yang memungkinkan kita memilih elemen berdasarkan nilai atribut `cla ss`.
 - **🌟 Manfaat:** Dengan Class Selector, kita dapat mengaplikasikan gaya pada sekelompok elemen yang memiliki karakteristik atau fungsi yang sama.
 - **⏰ Kapan digunakan:** Saat kita ingin memberikan gaya pada elemen dengan class tertentu, seperti tombol atau judul.
 
@@ -176,7 +354,7 @@ Meskipun dengan implementasi yang tepat dan penggunaan di lingkungan yang aman, 
     - Modifikasi fungsi `show_main`
         - Tampilkan objek `Item` yang terkait dengan pengguna yang sedang masuk dengan `items = Item.objects.filter(user=request.user)`
         - Sisipkan kode `request.user.username`
-    - Di `views.py`, tambahkan `HttpResponseRedirect`, `reverse`, dan `datetime`
+    - Di `views.py`, tambahkan `ResponseRedirecHttpt`, `reverse`, dan `datetime`
     - Pada fungsi `login_user`, tambahkan fungsi `last_login` untuk melihat kapan terakhir pengguna masuk. Modifikasi **blok** `if user is not None` dengan menambahkan kode:
         - `login(request, user)`
         - `response = HttpResponseRedirect(reverse("main:show_main"))`
