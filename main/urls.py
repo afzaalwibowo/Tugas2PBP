@@ -12,6 +12,8 @@ from main.views import edit_item
 from main.views import get_item_json
 from main.views import add_item_ajax
 from main.views import EditItemAjaxView
+from main.views import create_item_flutter
+from main.views import logout
 from . import views  # Make sure this import is present
 
 app_name = 'main'
@@ -32,5 +34,7 @@ urlpatterns = [
     path('get-item/', get_item_json, name='get_item_json'),
     path('create-item-ajax/', add_item_ajax, name='add_item_ajax'),
     path('edit-item-ajax/', views.EditItemAjaxView.as_view(), name='edit_item_ajax'),
+    path('create-flutter/', create_item_flutter, name='create_product_flutter'),
+    path('logout/', logout, name='logout'),
     
 ]

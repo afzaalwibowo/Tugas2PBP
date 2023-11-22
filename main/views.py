@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from main.forms import ItemForm
@@ -20,6 +21,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseNotFound
+from django.contrib.auth import logout as auth_logout
 # Create your views here.
 @login_required(login_url='/login')
 def show_main(request):
@@ -32,6 +34,7 @@ def show_main(request):
         'last_login': request.COOKIES['last_login'],
     }
 
+    
     return render(request, "main.html", context)
 
 def create_item(request):
@@ -145,3 +148,40 @@ class EditItemAjaxView(View):
         item.description = data.get('description')
         item.save()
         return JsonResponse({'status': 'success'})
+
+@csrf_exempt
+def create_item_flutter(request):
+    if request.method == 'POST':
+        
+        data = json.loads(request.body)
+
+        new_product = Item.objects.create(
+            user = request.user,
+            name = data["name"],
+            amount = int(data["amount"]),
+            description = data["description"]
+        )
+
+        new_product.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
+@csrf_exempt
+def logout(request):
+    username = request.user.username
+
+    try:
+        auth_logout(request)
+        return JsonResponse({
+            "username": username,
+            "status": True,
+            "message": "Logout berhasil!"
+        }, status=200)
+    except:
+        return JsonResponse({
+        "status": False,
+        "message": "Logout gagal."
+        }, status=401)
+
